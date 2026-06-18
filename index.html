@@ -221,12 +221,15 @@
   .santos-grid{display:grid; grid-template-columns:1fr; gap:14px}
   @media(min-width:680px){ .santos-grid{grid-template-columns:1fr 1fr} }
   @media(min-width:1040px){ .santos-grid{grid-template-columns:1fr 1fr 1fr} }
-  .santo{background:var(--papel); border:1px solid var(--linha); border-radius:16px; box-shadow:var(--sombra); overflow:hidden; align-self:start}
-  .santo-head{width:100%; text-align:left; border:0; background:transparent; padding:16px; display:flex; gap:14px; align-items:center; cursor:pointer; font-family:inherit}
+  .santo{--cor-santo:var(--ouro); position:relative; background:var(--papel); border:1px solid var(--linha); border-radius:16px; box-shadow:var(--sombra); overflow:hidden; align-self:start}
+  .santo::before{content:""; position:absolute; inset:0 auto 0 0; width:8px; background:var(--cor-santo); z-index:1}
+  .santo-head{width:100%; text-align:left; border:0; background:transparent; padding:16px 16px 16px 22px; display:flex; gap:14px; align-items:center; cursor:pointer; font-family:inherit}
   .santo-head:hover{background:var(--verde-claro)}
-  .medalha{flex-shrink:0; width:56px; height:56px; border-radius:50%; display:grid; place-items:center;
+  .medalha{flex-shrink:0; width:62px; height:62px; border-radius:50%; display:grid; place-items:center;
     background:linear-gradient(150deg,var(--azul-topo),var(--verde)); color:var(--ouro-claro);
-    border:1.5px solid rgba(232,201,122,.5)}
+    border:3px solid var(--cor-santo); overflow:hidden; box-shadow:0 4px 12px rgba(10,23,48,.18)}
+  .medalha img{width:100%; height:100%; object-fit:cover; display:block}
+  .medalha-fallback{display:none; place-items:center; width:100%; height:100%}
   .medalha svg{width:30px; height:30px}
   .santo-tit{flex:1; min-width:0}
   .santo-tit .nome{font-family:"Fraunces",serif; font-weight:600; font-size:19px; color:var(--tinta); line-height:1.12; display:block}
@@ -320,7 +323,7 @@
 <script>
 const estado={santosFiltro:"todos",santosBusca:"",santosOrdem:"festa"};
 const SANTOS=[
- {id:"pedro",nome:"São Pedro",titulo:"Príncipe dos Apóstolos · 1º Papa",festa:"29 de junho",ordemFesta:629,tags:["martir","nt","intimo"],
+ {id:"pedro",nome:"São Pedro",titulo:"Príncipe dos Apóstolos · 1º Papa",festa:"29 de junho",ordemFesta:629,tags:["martir","nt","intimo"],cor:"#1A3CDE",imagem:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Saint_Peter-Sinai_%286th_Century%29_Crop.jpg/330px-Saint_Peter-Sinai_%286th_Century%29_Crop.jpg",
   icone:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3.3"/><path d="M10.3 10.3 19 19"/><path d="M16.5 16.5l2.2 2.2"/><path d="M14.3 18.7l2.2 2.2"/></svg>`,
   resumo:"Simão, filho de Jonas, era pescador na Galileia e irmão de Santo André. Jesus o chamou e lhe deu o nome de Cefas, isto é, Pedro («pedra»), constituindo-o cabeça do colégio apostólico e fundamento visível da Igreja. Reconheceu Jesus como «o Cristo, o Filho do Deus vivo». Negou o Senhor três vezes na Paixão, arrependeu-se e foi reconfirmado como pastor do rebanho.",
   patronato:["Papas","Pescadores","A Igreja","Chaveiros"],
@@ -339,7 +342,7 @@ const SANTOS=[
             "As chaves representam o poder de «ligar e desligar» que Cristo lhe confiou."],
   oracao:"São Pedro, rocha sobre a qual Cristo edificou a sua Igreja, alcança-nos fé firme e fidelidade ao Senhor. Rogai por nós."},
 
- {id:"andre",nome:"Santo André",titulo:"O Primeiro Chamado (Protocleto)",festa:"30 de novembro",ordemFesta:1130,tags:["martir"],
+ {id:"andre",nome:"Santo André",titulo:"O Primeiro Chamado (Protocleto)",festa:"30 de novembro",ordemFesta:1130,tags:["martir"],cor:"#F2C230",imagem:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Rubens_apostel_andreas_grt.jpg/330px-Rubens_apostel_andreas_grt.jpg",
   icone:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg>`,
   resumo:"Irmão de Simão Pedro e, como ele, pescador. Foi primeiro discípulo de João Batista e, ao ouvi-lo apontar Jesus como o Cordeiro de Deus, seguiu o Mestre — por isso é chamado «Protocleto», o primeiro chamado. Logo levou seu irmão Pedro a Jesus.",
   patronato:["Escócia","Rússia","Grécia","Pescadores"],
@@ -353,7 +356,7 @@ const SANTOS=[
             "É padroeiro da Escócia, cuja bandeira traz justamente a cruz em X."],
   oracao:"Santo André, primeiro a seguir o Mestre e a conduzir outros até Ele, ajuda-nos a anunciar Cristo com alegria. Rogai por nós."},
 
- {id:"joao",nome:"São João Evangelista",titulo:"O Discípulo Amado · Evangelista",festa:"27 de dezembro",ordemFesta:1227,tags:["evangelista","nt","intimo"],
+ {id:"joao",nome:"São João Evangelista",titulo:"O Discípulo Amado · Evangelista",festa:"27 de dezembro",ordemFesta:1227,tags:["evangelista","nt","intimo"],cor:"#C92D2D",imagem:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Codexaureus_25.jpg/330px-Codexaureus_25.jpg",
   icone:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10l-1.2 5.2a3.9 3.9 0 0 1-7.6 0L7 4Z"/><path d="M12 13.4V18M9 20h6"/></svg>`,
   resumo:"Filho de Zebedeu e irmão de Tiago Maior, o mais jovem dos apóstolos e «o discípulo a quem Jesus amava». Fez parte do círculo íntimo de três. Esteve ao pé da cruz, onde Jesus lhe confiou sua própria Mãe. A tradição lhe atribui o quarto Evangelho, três cartas e o Apocalipse.",
   patronato:["Teólogos","Escritores","Amizade"],
@@ -368,7 +371,7 @@ const SANTOS=[
             "Seu símbolo de evangelista é a águia, pelo voo alto de sua teologia: «No princípio era o Verbo»."],
   oracao:"São João, discípulo amado, ensina-nos a permanecer no amor de Cristo e a contemplar o Verbo da vida. Rogai por nós."},
 
- {id:"filipe",nome:"São Filipe",titulo:"Apóstolo de Betsaida",festa:"3 de maio",ordemFesta:503,tags:["martir"],
+ {id:"filipe",nome:"São Filipe",titulo:"Apóstolo de Betsaida",festa:"3 de maio",ordemFesta:503,tags:["martir"],cor:"#2EA44F",imagem:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Rubens_apostel_philippus.jpg/330px-Rubens_apostel_philippus.jpg",
   icone:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v9M8.7 6.7h6.6"/><circle cx="9" cy="18" r="2.4"/><circle cx="15" cy="18" r="2.4"/></svg>`,
   resumo:"Natural de Betsaida, a mesma cidade de Pedro e André. Foi chamado diretamente por Jesus e logo conduziu Natanael (Bartolomeu) ao Mestre, com o convite «Vem e vê». Aparece em diálogos importantes do Evangelho de João.",
   patronato:["Confeiteiros e doceiros","Pregadores"],
@@ -381,7 +384,7 @@ const SANTOS=[
             "No calendário latino é celebrado no mesmo dia que São Tiago Menor."],
   oracao:"São Filipe, que pediste para ver o Pai e foste conduzido a Cristo, aumenta a nossa fé. Rogai por nós."},
 
- {id:"tome",nome:"São Tomé",titulo:"Dídimo · Apóstolo da Índia",festa:"3 de julho",ordemFesta:703,tags:["martir"],
+ {id:"tome",nome:"São Tomé",titulo:"Dídimo · Apóstolo da Índia",festa:"3 de julho",ordemFesta:703,tags:["martir"],cor:"#F28C28",imagem:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Thomas_the_Apostle._Detail_of_the_mosaic_in_the_Basilica_of_San_Vitale._Ravena%2C_Italy.jpg/330px-Thomas_the_Apostle._Detail_of_the_mosaic_in_the_Basilica_of_San_Vitale._Ravena%2C_Italy.jpg",
   icone:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 17.5 17 7"/><path d="M17 7l-3 .2L16.8 10 17 7Z"/><path d="M5 12.5V19h6.5"/></svg>`,
   resumo:"Chamado «Dídimo» (gêmeo). Ficou conhecido como «o incrédulo» por exigir ver as chagas do Ressuscitado, mas então fez uma das maiores profissões de fé: «Meu Senhor e meu Deus!». Antes disso, mostrara coragem ao propor seguir Jesus mesmo até a morte.",
   patronato:["Índia","Arquitetos e construtores","Quem duvida"],
@@ -394,7 +397,7 @@ const SANTOS=[
             "É padroeiro dos arquitetos, por uma tradição que lhe atribui a construção de um palácio."],
   oracao:"São Tomé, que tocaste as chagas e confessaste o Senhor, fortalece a nossa fé nas horas de dúvida. Rogai por nós."},
 
- {id:"tiago",nome:"São Tiago Maior",titulo:"Filho do Trovão · Apóstolo de Compostela",festa:"25 de julho",ordemFesta:725,tags:["martir","intimo"],
+ {id:"tiago",nome:"São Tiago Maior",titulo:"Filho do Trovão · Apóstolo de Compostela",festa:"25 de julho",ordemFesta:725,tags:["martir","intimo"],cor:"#E78AB4",imagem:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Peter_Paul_Rubens_-_St_James_the_Apostle_-_WGA20192.jpg/330px-Peter_Paul_Rubens_-_St_James_the_Apostle_-_WGA20192.jpg",
   icone:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20C6 14.5 4.5 9 12 4.2 19.5 9 18 14.5 12 20Z"/><path d="M12 4.6v15M8.4 6l1.4 12.4M15.6 6l-1.4 12.4"/></svg>`,
   resumo:"Filho de Zebedeu e irmão de João Evangelista. Jesus chamou os dois de «Boanerges», filhos do trovão, pelo temperamento ardente. Fez parte do círculo íntimo de três apóstolos (com Pedro e João). É chamado «Maior» para distingui-lo de Tiago Menor.",
   patronato:["Espanha","Peregrinos"],
@@ -409,7 +412,7 @@ const SANTOS=[
             "O Caminho de Santiago é uma das maiores peregrinações cristãs, e a vieira (concha) é o símbolo dos peregrinos."],
   oracao:"São Tiago Maior, apóstolo corajoso e peregrino, conduze-nos pelo caminho da fé até Cristo. Rogai por nós."},
 
- {id:"mateus",nome:"São Mateus",titulo:"O Publicano · Evangelista",festa:"21 de setembro",ordemFesta:921,tags:["evangelista","nt","martir"],
+ {id:"mateus",nome:"São Mateus",titulo:"O Publicano · Evangelista",festa:"21 de setembro",ordemFesta:921,tags:["evangelista","nt","martir"],cor:"#74C7EC",imagem:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Rubens_apostel_mattheus_grt.jpg/330px-Rubens_apostel_mattheus_grt.jpg",
   icone:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h8.5a2 2 0 0 1 2 2v10.5a2 2 0 0 0-2-1.6H5V5Z"/><circle cx="17.5" cy="16.5" r="3.2"/><path d="M17.5 14.9v3.2M16 16.5h3"/></svg>`,
   resumo:"Também chamado Levi, filho de Alfeu, era cobrador de impostos (publicano) em Cafarnaum quando Jesus o chamou: «Segue-me». Deixou tudo e ofereceu um banquete ao Mestre. A tradição lhe atribui o primeiro Evangelho, escrito sobretudo para os judeus.",
   patronato:["Contadores","Bancários","Profissionais de finanças"],
@@ -423,7 +426,7 @@ const SANTOS=[
             "De cobrador de impostos a evangelista: sinal da misericórdia que chama os pecadores."],
   oracao:"São Mateus, que deixaste tudo ao ouvir «Segue-me», ajuda-nos a responder com prontidão ao chamado de Deus. Rogai por nós."},
 
- {id:"judas",nome:"São Judas Tadeu",titulo:"Padroeiro das Causas Impossíveis",festa:"28 de outubro",ordemFesta:1028,tags:["martir","nt"],
+ {id:"judas",nome:"São Judas Tadeu",titulo:"Padroeiro das Causas Impossíveis",festa:"28 de outubro",ordemFesta:1028,tags:["martir","nt"],cor:"#7B3FA1",imagem:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Anthonis_van_Dyck%2C_Kunsthistorisches_Museum_Wien%2C_Gem%C3%A4ldegalerie_-_Apostel_Judas_Thadd%C3%A4us_-_GG_6809_-_Kunsthistorisches_Museum.jpg/330px-Anthonis_van_Dyck%2C_Kunsthistorisches_Museum_Wien%2C_Gem%C3%A4ldegalerie_-_Apostel_Judas_Thadd%C3%A4us_-_GG_6809_-_Kunsthistorisches_Museum.jpg",
   icone:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c2.8 3.8 4.6 5.8 4.6 8.6a4.6 4.6 0 0 1-9.2 0c0-1.4.6-2.6 1.8-3.7.3 1.2 1 1.9 1.9 1.9.8 0 1-1 .1-2.9.3-1.9.8-2.9.8-3.9Z"/></svg>`,
   resumo:"Apóstolo também chamado Tadeu (ou Lebeu), «Judas de Tiago», para não ser confundido com Judas Iscariotes. A tradição lhe atribui a Carta de São Judas no Novo Testamento. É um dos santos mais queridos no Brasil, invocado nas causas mais difíceis e desesperadas.",
   patronato:["Causas difíceis e desesperadas","Hospitais"],
@@ -457,9 +460,10 @@ function renderSantos(){
     const trad=s.tradicao.map(t=>'<li>'+t+'</li>').join("");
     const simb=s.simbolos.map(x=>'<span>'+x+'</span>').join("");
     const patr=s.patronato.map(x=>'<span>'+x+'</span>').join("");
-    return '<article class="santo" id="santo-'+s.id+'">'+
+    const medalha=s.imagem?'<img src="'+s.imagem+'" alt="Imagem de '+s.nome+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display=&quot;none&quot;;this.nextElementSibling.style.display=&quot;grid&quot;"><span class="medalha-fallback">'+s.icone+'</span>':s.icone;
+    return '<article class="santo" id="santo-'+s.id+'" style="--cor-santo:'+s.cor+'">'+
       '<button class="santo-head" aria-expanded="false">'+
-        '<span class="medalha">'+s.icone+'</span>'+
+        '<span class="medalha">'+medalha+'</span>'+
         '<span class="santo-tit"><span class="nome">'+s.nome+'</span>'+
           '<span class="sub">'+s.titulo+'</span>'+
           '<span class="festa">Festa: '+s.festa+'</span></span>'+
