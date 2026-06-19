@@ -281,6 +281,39 @@
     .santo-corpo{display:block!important}
   }
 </style>
+<style>
+  .plataforma-nav{display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin:0 0 20px}
+  .plataforma-tab{border:1px solid var(--linha); background:var(--papel); color:var(--pedra); padding:9px 13px; border-radius:10px; font-weight:700; font-size:13.5px}
+  .plataforma-tab[aria-selected="true"]{background:var(--verde); border-color:var(--verde); color:var(--marfim); box-shadow:var(--sombra)}
+  .mvp-intro{margin-bottom:18px}
+  .mvp-intro h2{font-size:clamp(22px,4vw,30px); color:var(--verde)}
+  .mvp-intro p{color:var(--pedra); margin:6px 0 0; font-size:15px}
+  .mvp-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px}
+  .mvp-card{background:var(--papel); border:1px solid var(--linha); border-radius:14px; padding:16px; box-shadow:var(--sombra)}
+  .mvp-card h3{font-size:18px; color:var(--verde); margin-bottom:8px}
+  .mvp-card p{margin:0; color:var(--pedra)}
+  .mvp-kicker{font-family:"Barlow Condensed",sans-serif; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ouro); font-size:13px; margin-bottom:6px}
+  .quiz-card{max-width:760px}
+  .quiz-progresso{font-family:"Barlow Condensed",sans-serif; font-weight:700; color:var(--pedra); letter-spacing:.04em; text-transform:uppercase; margin-bottom:10px}
+  .quiz-pergunta{font-family:"Fraunces",serif; color:var(--tinta); font-size:clamp(21px,4vw,30px); line-height:1.15; margin:0 0 14px}
+  .quiz-opcoes{display:grid; gap:9px}
+  .quiz-opcao{border:1px solid var(--linha); background:#fff; color:var(--tinta); border-radius:11px; padding:12px 14px; text-align:left; font-weight:700}
+  .quiz-opcao.correta{background:var(--ok-bg); border-color:#a9d2b3; color:#1d4d33}
+  .quiz-opcao.errada{background:var(--alerta-bg); border-color:#e9c2bd; color:var(--alerta)}
+  .quiz-feedback{min-height:24px; margin:12px 0 0; font-weight:700; color:var(--verde)}
+  .missao{display:flex; gap:12px; align-items:flex-start}
+  .missao input{margin-top:5px; accent-color:var(--verde)}
+  .missao strong{display:block; color:var(--tinta)}
+  .missao span{display:block; color:var(--pedra); font-size:14px; margin-top:2px}
+  .oracao-card p{font-family:"Fraunces",serif; color:var(--tinta); font-size:16px; line-height:1.55}
+  .acampamento-painel{display:grid; grid-template-columns:minmax(0,1.25fr) minmax(220px,.75fr); gap:14px}
+  .santo-mini-lista{display:grid; gap:8px}
+  .santo-mini{display:flex; align-items:center; gap:10px; padding:9px 10px; border:1px solid var(--linha); border-radius:10px; background:#fff}
+  .santo-mini-cor{width:12px; height:34px; border-radius:999px; background:var(--cor-santo)}
+  .santo-mini strong{display:block; color:var(--tinta)}
+  .santo-mini span{display:block; color:var(--pedra); font-size:13px}
+  @media(max-width:720px){.plataforma-tab{flex:1 1 auto}.acampamento-painel{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <header id="cabecalho">
@@ -296,6 +329,13 @@
   </div>
 </header>
 <main>
+<nav class="plataforma-nav" role="tablist" aria-label="Navegação da plataforma">
+  <button class="plataforma-tab" role="tab" aria-selected="true" data-panel="santos">Santos</button>
+  <button class="plataforma-tab" role="tab" aria-selected="false" data-panel="quiz">Quiz</button>
+  <button class="plataforma-tab" role="tab" aria-selected="false" data-panel="missoes">Missões</button>
+  <button class="plataforma-tab" role="tab" aria-selected="false" data-panel="oracoes">Orações</button>
+  <button class="plataforma-tab" role="tab" aria-selected="false" data-panel="acampamento">Acampamento</button>
+</nav>
 <section class="panel ativo" id="panel-santos">
     <div class="santos-intro">
       <h2>Conheça os Santos</h2>
@@ -318,6 +358,46 @@
       </div>
     </div>
     <div class="santos-grid" id="santos-grid"></div>
+  </section>
+  <section class="panel" id="panel-quiz">
+    <div class="mvp-intro">
+      <h2>Quiz da Fé</h2>
+      <p>Perguntas rápidas para aprender brincando. Cada resposta revela uma pista sobre os santos e a nossa fé.</p>
+    </div>
+    <div class="mvp-card quiz-card" id="quiz-card"></div>
+  </section>
+  <section class="panel" id="panel-missoes">
+    <div class="mvp-intro">
+      <h2>Missões da Semana</h2>
+      <p>Pequenos gestos para viver a fé em casa, na escola e no grupo.</p>
+    </div>
+    <div class="mvp-grid" id="missoes-grid"></div>
+  </section>
+  <section class="panel" id="panel-oracoes">
+    <div class="mvp-intro">
+      <h2>Orações</h2>
+      <p>Um cantinho simples para rezar antes, durante ou depois do encontro.</p>
+    </div>
+    <div class="mvp-grid" id="oracoes-grid"></div>
+  </section>
+  <section class="panel" id="panel-acampamento">
+    <div class="mvp-intro">
+      <h2>Acampamento Sênior</h2>
+      <p>Área especial para reunir os santos intercessores, as cores e uma dinâmica rápida para o grupo.</p>
+    </div>
+    <div class="acampamento-painel">
+      <div class="mvp-card">
+        <div class="mvp-kicker">Dinâmica</div>
+        <h3>Sorteio do intercessor</h3>
+        <p id="sorteio-texto">Toque no botão para sortear um santo e receber uma missão inspirada nele.</p>
+        <div style="margin-top:14px"><button class="btn btn-verde" id="btn-sortear-santo">Sortear santo</button></div>
+      </div>
+      <div class="mvp-card">
+        <div class="mvp-kicker">Cores</div>
+        <h3>Intercessores</h3>
+        <div class="santo-mini-lista" id="santo-mini-lista"></div>
+      </div>
+    </div>
   </section>
 </main>
 <script>
@@ -485,7 +565,92 @@ const _so=document.getElementById("santos-ord");
 if(_so)_so.addEventListener("change",e=>{estado.santosOrdem=e.target.value;renderSantos();});
 renderSantos();
 
+const QUIZ=[
+  {pergunta:"Qual santo recebeu de Jesus as chaves do Reino?",opcoes:["São Pedro","São Tomé","São Filipe"],correta:0,explica:"São Pedro é lembrado pelas chaves e pela missão de apascentar o rebanho."},
+  {pergunta:"Qual santo é invocado nas causas difíceis e desesperadas?",opcoes:["São Judas Tadeu","Santo André","São Mateus"],correta:0,explica:"São Judas Tadeu é um intercessor muito querido nas causas difíceis."},
+  {pergunta:"Quem respondeu ao Ressuscitado: «Meu Senhor e meu Deus!»?",opcoes:["São João Evangelista","São Tomé","São Tiago Maior"],correta:1,explica:"São Tomé transforma a dúvida em uma das maiores profissões de fé."},
+  {pergunta:"Qual apóstolo era cobrador de impostos antes de seguir Jesus?",opcoes:["São Mateus","São Pedro","Santo André"],correta:0,explica:"São Mateus, também chamado Levi, deixou tudo ao ouvir: «Segue-me»."},
+  {pergunta:"Qual evangelista é chamado de Discípulo Amado?",opcoes:["São Filipe","São João Evangelista","São Tiago Maior"],correta:1,explica:"São João permaneceu perto de Jesus e recebeu Maria aos pés da cruz."}
+];
+const MISSOES=[
+  {titulo:"Oração escondida",texto:"Reze por alguém do grupo sem contar para a pessoa hoje."},
+  {titulo:"Gesto de serviço",texto:"Ajude em uma tarefa de casa sem esperar agradecimento."},
+  {titulo:"Versículo vivo",texto:"Leia Jo 20,24-29 e escreva uma frase que fortaleça sua fé."},
+  {titulo:"Santo da família",texto:"Pergunte em casa qual santo marcou a história da sua família."},
+  {titulo:"Coragem de apóstolo",texto:"Convide alguém para rezar um Pai-Nosso com você."},
+  {titulo:"Gratidão",texto:"Agradeça a Deus por três pessoas que cuidam de você."}
+];
+const ORACOES=[
+  {titulo:"Pai-Nosso",texto:"Pai nosso que estais nos céus, santificado seja o vosso nome; venha a nós o vosso Reino; seja feita a vossa vontade, assim na terra como no céu."},
+  {titulo:"Ave-Maria",texto:"Ave Maria, cheia de graça, o Senhor é convosco; bendita sois vós entre as mulheres, e bendito é o fruto do vosso ventre, Jesus."},
+  {titulo:"Oração do encontro",texto:"Senhor Jesus, guia nossos passos, abre nosso coração à tua Palavra e faz de nós testemunhas alegres da tua presença."},
+  {titulo:"Oração aos intercessores",texto:"Santos Apóstolos e intercessores deste acampamento, acompanhai nossas famílias, nosso grupo e nossa caminhada de fé. Rogai por nós."}
+];
+let quizAtual=0;
+let quizRespondido=false;
+
+function trocarPainel(alvo){
+  document.querySelectorAll(".plataforma-tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.panel===alvo?"true":"false"));
+  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("ativo",p.id==="panel-"+alvo));
+  if(alvo==="quiz")renderQuiz();
+  if(alvo==="missoes")renderMissoes();
+  if(alvo==="oracoes")renderOracoes();
+  if(alvo==="acampamento")renderAcampamento();
+}
+function renderQuiz(){
+  const el=document.getElementById("quiz-card"); if(!el)return;
+  const q=QUIZ[quizAtual];
+  el.innerHTML='<div class="quiz-progresso">Pergunta '+(quizAtual+1)+' de '+QUIZ.length+'</div>'+
+    '<h3 class="quiz-pergunta">'+q.pergunta+'</h3>'+
+    '<div class="quiz-opcoes">'+q.opcoes.map((o,i)=>'<button class="quiz-opcao" data-resposta="'+i+'">'+o+'</button>').join("")+'</div>'+
+    '<div class="quiz-feedback" id="quiz-feedback"></div>'+
+    '<div style="margin-top:14px"><button class="btn" id="btn-proxima-quiz">Próxima</button></div>';
+  quizRespondido=false;
+}
+function responderQuiz(i){
+  if(quizRespondido)return;
+  quizRespondido=true;
+  const q=QUIZ[quizAtual];
+  document.querySelectorAll(".quiz-opcao").forEach((b,idx)=>{
+    if(idx===q.correta)b.classList.add("correta");
+    else if(idx===i)b.classList.add("errada");
+  });
+  const fb=document.getElementById("quiz-feedback");
+  if(fb)fb.textContent=(i===q.correta?"Muito bem! ":"Quase. ")+q.explica;
+}
+function proximaQuiz(){
+  quizAtual=(quizAtual+1)%QUIZ.length;
+  renderQuiz();
+}
+function renderMissoes(){
+  const grid=document.getElementById("missoes-grid"); if(!grid)return;
+  grid.innerHTML=MISSOES.map((m,i)=>'<label class="mvp-card missao"><input type="checkbox" data-missao="'+i+'"><span><strong>'+m.titulo+'</strong><span>'+m.texto+'</span></span></label>').join("");
+}
+function renderOracoes(){
+  const grid=document.getElementById("oracoes-grid"); if(!grid)return;
+  grid.innerHTML=ORACOES.map(o=>'<article class="mvp-card oracao-card"><div class="mvp-kicker">Oração</div><h3>'+o.titulo+'</h3><p>'+o.texto+'</p></article>').join("");
+}
+function renderAcampamento(){
+  const lista=document.getElementById("santo-mini-lista"); if(!lista)return;
+  lista.innerHTML=SANTOS.map(s=>'<div class="santo-mini" style="--cor-santo:'+s.cor+'"><span class="santo-mini-cor"></span><span><strong>'+s.nome+'</strong><span>'+s.titulo+'</span></span></div>').join("");
+}
+function sortearSanto(){
+  const s=SANTOS[Math.floor(Math.random()*SANTOS.length)];
+  const texto=document.getElementById("sorteio-texto"); if(!texto)return;
+  texto.innerHTML='<strong>'+s.nome+'</strong><br>'+s.oracao+'<br><br><span style="color:var(--pedra)">Missão: escolha um gesto concreto inspirado neste santo e viva hoje.</span>';
+}
+renderQuiz();
+renderMissoes();
+renderOracoes();
+renderAcampamento();
+
 document.addEventListener("click",e=>{
+  const tab=e.target.closest(".plataforma-tab");
+  if(tab){trocarPainel(tab.dataset.panel);return;}
+  const quiz=e.target.closest(".quiz-opcao");
+  if(quiz){responderQuiz(+quiz.dataset.resposta);return;}
+  if(e.target.closest("#btn-proxima-quiz")){proximaQuiz();return;}
+  if(e.target.closest("#btn-sortear-santo")){sortearSanto();return;}
   const sc=e.target.closest(".santo-chip");
   if(sc){
     estado.santosFiltro=sc.dataset.f;
