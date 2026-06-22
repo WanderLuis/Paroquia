@@ -301,6 +301,18 @@
   .quiz-opcao.correta{background:var(--ok-bg); border-color:#a9d2b3; color:#1d4d33}
   .quiz-opcao.errada{background:var(--alerta-bg); border-color:#e9c2bd; color:var(--alerta)}
   .quiz-feedback{min-height:24px; margin:12px 0 0; font-weight:700; color:var(--verde)}
+  .kids-hero{background:linear-gradient(135deg,#fff7dc,#e9f7ff 48%,#f7e9ff); border:1px solid var(--linha); border-radius:14px; padding:16px; margin-bottom:14px; box-shadow:var(--sombra)}
+  .kids-hero h3{font-size:22px; color:var(--verde); margin-bottom:4px}
+  .kids-hero p{margin:0; color:var(--pedra)}
+  .kids-card{max-width:780px; border:2px solid #E8C97A}
+  .kids-pista{display:inline-flex; align-items:center; gap:8px; background:var(--ouro-suave); color:#7a5e16; border:1px solid #E6D199; border-radius:999px; padding:6px 11px; font-weight:800; margin-bottom:12px}
+  .kids-pergunta{font-family:"Fraunces",serif; color:var(--tinta); font-size:clamp(22px,5vw,34px); line-height:1.12; margin:0 0 14px}
+  .kids-opcoes{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px}
+  .kids-opcao{border:2px solid var(--linha); background:#fff; color:var(--tinta); border-radius:14px; padding:13px; text-align:left; font-weight:800; min-height:64px}
+  .kids-opcao.correta{background:#E4F7E8; border-color:#7CCB8B; color:#1d4d33}
+  .kids-opcao.errada{background:#FCE8E5; border-color:#E3A39B; color:var(--alerta)}
+  .kids-feedback{min-height:34px; margin:13px 0 0; font-weight:800; color:var(--verde); font-size:16px}
+  .kids-score{font-family:"Barlow Condensed",sans-serif; font-weight:800; color:var(--verde); letter-spacing:.04em; text-transform:uppercase; margin-bottom:10px}
   .missao{display:flex; gap:12px; align-items:flex-start}
   .missao input{margin-top:5px; accent-color:var(--verde)}
   .missao strong{display:block; color:var(--tinta)}
@@ -331,6 +343,7 @@
 <main>
 <nav class="plataforma-nav" role="tablist" aria-label="Navegação da plataforma">
   <button class="plataforma-tab" role="tab" aria-selected="true" data-panel="santos">Santos</button>
+  <button class="plataforma-tab" role="tab" aria-selected="false" data-panel="criancas">Crianças</button>
   <button class="plataforma-tab" role="tab" aria-selected="false" data-panel="quiz">Quiz</button>
   <button class="plataforma-tab" role="tab" aria-selected="false" data-panel="missoes">Missões</button>
   <button class="plataforma-tab" role="tab" aria-selected="false" data-panel="oracoes">Orações</button>
@@ -365,6 +378,17 @@
       <p>Perguntas rápidas para aprender brincando. Cada resposta revela uma pista sobre os santos e a nossa fé.</p>
     </div>
     <div class="mvp-card quiz-card" id="quiz-card"></div>
+  </section>
+  <section class="panel" id="panel-criancas">
+    <div class="mvp-intro">
+      <h2>Espaço das Crianças</h2>
+      <p>Um quiz de pistas para descobrir os santos de forma simples, alegre e divertida.</p>
+    </div>
+    <div class="kids-hero">
+      <h3>Quem é esse santo?</h3>
+      <p>Leia a pista, escolha uma resposta e descubra um detalhe bonito da nossa fé.</p>
+    </div>
+    <div class="mvp-card kids-card" id="kids-card"></div>
   </section>
   <section class="panel" id="panel-missoes">
     <div class="mvp-intro">
@@ -572,6 +596,14 @@ const QUIZ=[
   {pergunta:"Qual apóstolo era cobrador de impostos antes de seguir Jesus?",opcoes:["São Mateus","São Pedro","Santo André"],correta:0,explica:"São Mateus, também chamado Levi, deixou tudo ao ouvir: «Segue-me»."},
   {pergunta:"Qual evangelista é chamado de Discípulo Amado?",opcoes:["São Filipe","São João Evangelista","São Tiago Maior"],correta:1,explica:"São João permaneceu perto de Jesus e recebeu Maria aos pés da cruz."}
 ];
+const KIDS_QUIZ=[
+  {pista:"Tenho chaves na mão!",pergunta:"Qual santo lembra as chaves do Reino?",opcoes:["São Pedro","São Mateus","São João"],correta:0,explica:"Isso! São Pedro nos lembra que Jesus confia missões importantes aos seus amigos."},
+  {pista:"Sou amigo das causas difíceis.",pergunta:"Quem ajuda a rezar quando algo parece impossível?",opcoes:["São Judas Tadeu","Santo André","São Filipe"],correta:0,explica:"Muito bem! São Judas Tadeu é lembrado como intercessor nas causas difíceis."},
+  {pista:"Eu disse: Meu Senhor e meu Deus!",pergunta:"Quem fez essa linda profissão de fé?",opcoes:["São Tomé","São Tiago Maior","São Pedro"],correta:0,explica:"Acertou! São Tomé nos ensina que Jesus acolhe nossas dúvidas e fortalece a fé."},
+  {pista:"Eu tinha um livro e escrevi sobre Jesus.",pergunta:"Qual santo era evangelista e antes cobrava impostos?",opcoes:["São Mateus","Santo André","São Filipe"],correta:0,explica:"Boa! São Mateus deixou tudo para seguir Jesus."},
+  {pista:"Minha cruz parece um X.",pergunta:"Qual santo é lembrado pela cruz em forma de X?",opcoes:["Santo André","São João","São Judas Tadeu"],correta:0,explica:"Isso mesmo! Santo André foi um dos primeiros a seguir Jesus."},
+  {pista:"Sou chamado Discípulo Amado.",pergunta:"Quem ficou pertinho de Jesus na cruz?",opcoes:["São João Evangelista","São Tomé","São Pedro"],correta:0,explica:"Perfeito! São João nos lembra o amor fiel por Jesus."}
+];
 const MISSOES=[
   {titulo:"Oração escondida",texto:"Reze por alguém do grupo sem contar para a pessoa hoje."},
   {titulo:"Gesto de serviço",texto:"Ajude em uma tarefa de casa sem esperar agradecimento."},
@@ -588,11 +620,15 @@ const ORACOES=[
 ];
 let quizAtual=0;
 let quizRespondido=false;
+let kidsAtual=0;
+let kidsPontos=0;
+let kidsRespondido=false;
 
 function trocarPainel(alvo){
   document.querySelectorAll(".plataforma-tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.panel===alvo?"true":"false"));
   document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("ativo",p.id==="panel-"+alvo));
   if(alvo==="quiz")renderQuiz();
+  if(alvo==="criancas")renderKidsQuiz();
   if(alvo==="missoes")renderMissoes();
   if(alvo==="oracoes")renderOracoes();
   if(alvo==="acampamento")renderAcampamento();
@@ -622,6 +658,34 @@ function proximaQuiz(){
   quizAtual=(quizAtual+1)%QUIZ.length;
   renderQuiz();
 }
+function renderKidsQuiz(){
+  const el=document.getElementById("kids-card"); if(!el)return;
+  const q=KIDS_QUIZ[kidsAtual];
+  el.innerHTML='<div class="kids-score">Pontos: '+kidsPontos+' · Desafio '+(kidsAtual+1)+' de '+KIDS_QUIZ.length+'</div>'+
+    '<div class="kids-pista">Pista: '+q.pista+'</div>'+
+    '<h3 class="kids-pergunta">'+q.pergunta+'</h3>'+
+    '<div class="kids-opcoes">'+q.opcoes.map((o,i)=>'<button class="kids-opcao" data-kids-resposta="'+i+'">'+o+'</button>').join("")+'</div>'+
+    '<div class="kids-feedback" id="kids-feedback"></div>'+
+    '<div style="margin-top:14px"><button class="btn btn-ouro" id="btn-proximo-kids">Próximo santo</button></div>';
+  kidsRespondido=false;
+}
+function responderKidsQuiz(i){
+  if(kidsRespondido)return;
+  kidsRespondido=true;
+  const q=KIDS_QUIZ[kidsAtual];
+  if(i===q.correta)kidsPontos++;
+  document.querySelectorAll(".kids-opcao").forEach((b,idx)=>{
+    if(idx===q.correta)b.classList.add("correta");
+    else if(idx===i)b.classList.add("errada");
+  });
+  const fb=document.getElementById("kids-feedback");
+  if(fb)fb.textContent=(i===q.correta?"Que alegria, você acertou! ":"Boa tentativa! ")+q.explica;
+}
+function proximoKidsQuiz(){
+  kidsAtual=(kidsAtual+1)%KIDS_QUIZ.length;
+  if(kidsAtual===0)kidsPontos=0;
+  renderKidsQuiz();
+}
 function renderMissoes(){
   const grid=document.getElementById("missoes-grid"); if(!grid)return;
   grid.innerHTML=MISSOES.map((m,i)=>'<label class="mvp-card missao"><input type="checkbox" data-missao="'+i+'"><span><strong>'+m.titulo+'</strong><span>'+m.texto+'</span></span></label>').join("");
@@ -640,6 +704,7 @@ function sortearSanto(){
   texto.innerHTML='<strong>'+s.nome+'</strong><br>'+s.oracao+'<br><br><span style="color:var(--pedra)">Missão: escolha um gesto concreto inspirado neste santo e viva hoje.</span>';
 }
 renderQuiz();
+renderKidsQuiz();
 renderMissoes();
 renderOracoes();
 renderAcampamento();
@@ -649,7 +714,10 @@ document.addEventListener("click",e=>{
   if(tab){trocarPainel(tab.dataset.panel);return;}
   const quiz=e.target.closest(".quiz-opcao");
   if(quiz){responderQuiz(+quiz.dataset.resposta);return;}
+  const kids=e.target.closest(".kids-opcao");
+  if(kids){responderKidsQuiz(+kids.dataset.kidsResposta);return;}
   if(e.target.closest("#btn-proxima-quiz")){proximaQuiz();return;}
+  if(e.target.closest("#btn-proximo-kids")){proximoKidsQuiz();return;}
   if(e.target.closest("#btn-sortear-santo")){sortearSanto();return;}
   const sc=e.target.closest(".santo-chip");
   if(sc){
