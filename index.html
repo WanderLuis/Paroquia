@@ -305,6 +305,12 @@
   .kids-hero h3{font-size:22px; color:var(--verde); margin-bottom:4px}
   .kids-hero p{margin:0; color:var(--pedra)}
   .kids-card{max-width:780px; border:2px solid #E8C97A}
+  .kids-fases{display:grid; grid-template-columns:repeat(5,1fr); gap:7px; margin:0 0 14px}
+  .kids-fase{border:1px solid var(--linha); border-radius:10px; padding:8px 6px; background:#fff; text-align:center; font-weight:800; color:var(--pedra); font-size:13px}
+  .kids-fase.ativa{background:var(--verde); border-color:var(--verde); color:#fff}
+  .kids-fase.liberada{border-color:#E8C97A; color:var(--tinta)}
+  .kids-meta{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 12px}
+  .kids-meta span{background:#fff; border:1px solid var(--linha); border-radius:999px; padding:6px 10px; font-weight:800; color:var(--tinta); font-size:13px}
   .kids-pista{display:inline-flex; align-items:center; gap:8px; background:var(--ouro-suave); color:#7a5e16; border:1px solid #E6D199; border-radius:999px; padding:6px 11px; font-weight:800; margin-bottom:12px}
   .kids-pergunta{font-family:"Fraunces",serif; color:var(--tinta); font-size:clamp(22px,5vw,34px); line-height:1.12; margin:0 0 14px}
   .kids-opcoes{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px}
@@ -313,6 +319,10 @@
   .kids-opcao.errada{background:#FCE8E5; border-color:#E3A39B; color:var(--alerta)}
   .kids-feedback{min-height:34px; margin:13px 0 0; font-weight:800; color:var(--verde); font-size:16px}
   .kids-score{font-family:"Barlow Condensed",sans-serif; font-weight:800; color:var(--verde); letter-spacing:.04em; text-transform:uppercase; margin-bottom:10px}
+  .kids-resultado{text-align:center}
+  .kids-resultado h3{font-family:"Fraunces",serif; font-size:clamp(26px,6vw,42px); color:var(--tinta); margin-bottom:8px}
+  .kids-resultado p{color:var(--pedra); margin:0 auto 14px; max-width:560px}
+  .kids-acoes{display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:14px}
   .missao{display:flex; gap:12px; align-items:flex-start}
   .missao input{margin-top:5px; accent-color:var(--verde)}
   .missao strong{display:block; color:var(--tinta)}
@@ -596,13 +606,67 @@ const QUIZ=[
   {pergunta:"Qual apóstolo era cobrador de impostos antes de seguir Jesus?",opcoes:["São Mateus","São Pedro","Santo André"],correta:0,explica:"São Mateus, também chamado Levi, deixou tudo ao ouvir: «Segue-me»."},
   {pergunta:"Qual evangelista é chamado de Discípulo Amado?",opcoes:["São Filipe","São João Evangelista","São Tiago Maior"],correta:1,explica:"São João permaneceu perto de Jesus e recebeu Maria aos pés da cruz."}
 ];
-const KIDS_QUIZ=[
-  {pista:"Tenho chaves na mão!",pergunta:"Qual santo lembra as chaves do Reino?",opcoes:["São Pedro","São Mateus","São João"],correta:0,explica:"Isso! São Pedro nos lembra que Jesus confia missões importantes aos seus amigos."},
-  {pista:"Sou amigo das causas difíceis.",pergunta:"Quem ajuda a rezar quando algo parece impossível?",opcoes:["São Judas Tadeu","Santo André","São Filipe"],correta:0,explica:"Muito bem! São Judas Tadeu é lembrado como intercessor nas causas difíceis."},
-  {pista:"Eu disse: Meu Senhor e meu Deus!",pergunta:"Quem fez essa linda profissão de fé?",opcoes:["São Tomé","São Tiago Maior","São Pedro"],correta:0,explica:"Acertou! São Tomé nos ensina que Jesus acolhe nossas dúvidas e fortalece a fé."},
-  {pista:"Eu tinha um livro e escrevi sobre Jesus.",pergunta:"Qual santo era evangelista e antes cobrava impostos?",opcoes:["São Mateus","Santo André","São Filipe"],correta:0,explica:"Boa! São Mateus deixou tudo para seguir Jesus."},
-  {pista:"Minha cruz parece um X.",pergunta:"Qual santo é lembrado pela cruz em forma de X?",opcoes:["Santo André","São João","São Judas Tadeu"],correta:0,explica:"Isso mesmo! Santo André foi um dos primeiros a seguir Jesus."},
-  {pista:"Sou chamado Discípulo Amado.",pergunta:"Quem ficou pertinho de Jesus na cruz?",opcoes:["São João Evangelista","São Tomé","São Pedro"],correta:0,explica:"Perfeito! São João nos lembra o amor fiel por Jesus."}
+const KIDS_FASES=[
+  {titulo:"Fase 1",nivel:"Primeiros passos",perguntas:[
+    {pista:"Tenho chaves na mão.",pergunta:"Qual santo lembra as chaves do Reino?",correta:"São Pedro",opcoes:["São Pedro","São Mateus","Santo André"],explica:"São Pedro recebeu de Jesus uma missão de cuidado e liderança."},
+    {pista:"Sou amigo das causas difíceis.",pergunta:"Quem é lembrado como intercessor nas causas difíceis?",correta:"São Judas Tadeu",opcoes:["São Judas Tadeu","São Filipe","São Tiago Maior"],explica:"São Judas Tadeu ajuda muita gente a rezar quando algo parece difícil."},
+    {pista:"Eu disse: Meu Senhor e meu Deus.",pergunta:"Quem fez essa profissão de fé diante de Jesus ressuscitado?",correta:"São Tomé",opcoes:["São Tomé","São João Evangelista","Santo André"],explica:"São Tomé nos ensina que Jesus acolhe nossas dúvidas e fortalece a fé."},
+    {pista:"Eu era cobrador de impostos.",pergunta:"Qual santo deixou tudo para seguir Jesus?",correta:"São Mateus",opcoes:["São Mateus","São Pedro","São Judas Tadeu"],explica:"São Mateus ouviu o chamado de Jesus e mudou de vida."},
+    {pista:"Meu nome lembra uma cruz em X.",pergunta:"Qual santo é lembrado pela cruz em forma de X?",correta:"Santo André",opcoes:["Santo André","São Filipe","São João Evangelista"],explica:"Santo André foi um dos primeiros a seguir Jesus."},
+    {pista:"Sou chamado Discípulo Amado.",pergunta:"Quem ficou perto de Jesus na cruz?",correta:"São João Evangelista",opcoes:["São João Evangelista","São Tomé","São Tiago Maior"],explica:"São João Evangelista nos lembra o amor fiel por Jesus."},
+    {pista:"Minha cor no acampamento é verde.",pergunta:"Qual santo usa a fita verde?",correta:"São Filipe",opcoes:["São Filipe","São Pedro","São Mateus"],explica:"São Filipe é representado pela cor verde neste acampamento."},
+    {pista:"Minha cor no acampamento é rosa.",pergunta:"Qual santo usa a fita rosa?",correta:"São Tiago Maior",opcoes:["São Tiago Maior","São Judas Tadeu","Santo André"],explica:"São Tiago Maior é representado pela cor rosa neste acampamento."},
+    {pista:"Minha cor no acampamento é azul claro.",pergunta:"Qual santo usa a fita azul claro?",correta:"São Mateus",opcoes:["São Mateus","São João Evangelista","São Pedro"],explica:"São Mateus é representado pela cor azul claro."},
+    {pista:"Minha cor no acampamento é vermelha.",pergunta:"Qual santo usa a fita vermelha?",correta:"São João Evangelista",opcoes:["São João Evangelista","Santo André","São Tomé"],explica:"São João Evangelista é representado pela cor vermelha."}
+  ]},
+  {titulo:"Fase 2",nivel:"Símbolos e cores",perguntas:[
+    {pista:"Minha cor é laranja.",pergunta:"Qual santo é São Thomé na lista do acampamento?",correta:"São Tomé",opcoes:["São Tomé","São Pedro","São Filipe"],explica:"São Thomé aparece também como São Tomé, representado pela cor laranja."},
+    {pista:"Minha cor é roxa.",pergunta:"Qual intercessor usa a fita roxa?",correta:"São Judas Tadeu",opcoes:["São Judas Tadeu","São Mateus","Santo André"],explica:"São Judas Tadeu usa a cor roxa no acampamento."},
+    {pista:"Minha cor é azul.",pergunta:"Qual santo usa a fita azul?",correta:"São Pedro",opcoes:["São Pedro","São Tiago Maior","São João Evangelista"],explica:"São Pedro usa a cor azul."},
+    {pista:"Minha cor é amarela.",pergunta:"Qual santo usa a fita amarela?",correta:"Santo André",opcoes:["Santo André","São Tomé","São Filipe"],explica:"Santo André é representado pela cor amarela."},
+    {pista:"Eu disse: Mostra-nos o Pai.",pergunta:"Qual apóstolo fez esse pedido a Jesus?",correta:"São Filipe",opcoes:["São Filipe","São Pedro","São Judas Tadeu"],explica:"São Filipe queria conhecer mais profundamente o Pai."},
+    {pista:"Meu irmão também foi chamado por Jesus.",pergunta:"Quem era irmão de Simão Pedro?",correta:"Santo André",opcoes:["Santo André","São Mateus","São João Evangelista"],explica:"Santo André era irmão de Pedro e apresentou pessoas a Jesus."},
+    {pista:"Escrevi um Evangelho.",pergunta:"Qual desses santos é evangelista?",correta:"São Mateus",opcoes:["São Mateus","São Tiago Maior","São Filipe"],explica:"São Mateus é um dos evangelistas."},
+    {pista:"Também escrevi um Evangelho.",pergunta:"Quem é chamado Evangelista?",correta:"São João Evangelista",opcoes:["São João Evangelista","São Judas Tadeu","São Tomé"],explica:"São João Evangelista anunciou Jesus por seus escritos."},
+    {pista:"Fui pescador e apóstolo.",pergunta:"Qual destes santos era pescador?",correta:"São Pedro",opcoes:["São Pedro","São Mateus","São Judas Tadeu"],explica:"São Pedro trabalhava como pescador antes de seguir Jesus."},
+    {pista:"Tenho nome de apóstolo e fui testemunha corajosa.",pergunta:"Quem é chamado de Maior para distinguir de outro Tiago?",correta:"São Tiago Maior",opcoes:["São Tiago Maior","São Tomé","Santo André"],explica:"São Tiago Maior é chamado assim para diferenciá-lo de outro apóstolo chamado Tiago."}
+  ]},
+  {titulo:"Fase 3",nivel:"Caminho dos apóstolos",perguntas:[
+    {pista:"Jesus me chamou de pedra.",pergunta:"Quem recebeu esse novo nome e missão?",correta:"São Pedro",opcoes:["São Pedro","São Filipe","São Mateus"],explica:"Pedro significa pedra, sinal da missão que Jesus confiou a ele."},
+    {pista:"Minha dúvida virou oração.",pergunta:"Qual santo ajuda a transformar dúvida em fé?",correta:"São Tomé",opcoes:["São Tomé","São Judas Tadeu","Santo André"],explica:"São Tomé nos mostra que perguntar com sinceridade pode aproximar de Jesus."},
+    {pista:"Levei pessoas até Jesus.",pergunta:"Qual apóstolo é lembrado por apresentar Jesus aos outros?",correta:"Santo André",opcoes:["Santo André","São Mateus","São Tiago Maior"],explica:"Santo André aparece nos Evangelhos levando pessoas até Jesus."},
+    {pista:"Abandonei a coletoria.",pergunta:"Quem deixou a mesa de impostos para seguir Jesus?",correta:"São Mateus",opcoes:["São Mateus","São João Evangelista","São Pedro"],explica:"São Mateus respondeu ao chamado de Jesus com coragem."},
+    {pista:"Estive com Jesus em momentos especiais.",pergunta:"Qual apóstolo esteve entre os mais próximos de Jesus?",correta:"São Tiago Maior",opcoes:["São Tiago Maior","São Judas Tadeu","São Filipe"],explica:"São Tiago Maior esteve em momentos importantes da vida de Jesus."},
+    {pista:"Fiquei aos pés da cruz.",pergunta:"Qual santo recebeu Maria como mãe?",correta:"São João Evangelista",opcoes:["São João Evangelista","São Tomé","Santo André"],explica:"São João estava junto de Maria aos pés da cruz."},
+    {pista:"Sou lembrado quando a esperança parece pequena.",pergunta:"Quem intercede nas causas difíceis?",correta:"São Judas Tadeu",opcoes:["São Judas Tadeu","São Pedro","São Mateus"],explica:"São Judas Tadeu aponta para a confiança em Deus mesmo nas dificuldades."},
+    {pista:"Perguntei o caminho.",pergunta:"Qual santo ouviu de Jesus: Eu sou o caminho, a verdade e a vida?",correta:"São Tomé",opcoes:["São Tomé","São Filipe","São Tiago Maior"],explica:"A pergunta de Tomé abriu espaço para uma resposta muito importante de Jesus."},
+    {pista:"Quis ver o Pai.",pergunta:"Quem pediu a Jesus: Mostra-nos o Pai?",correta:"São Filipe",opcoes:["São Filipe","São João Evangelista","São Pedro"],explica:"São Filipe ajuda a lembrar que Jesus revela o rosto do Pai."},
+    {pista:"Fui chamado com meu irmão à beira do mar.",pergunta:"Quem foi chamado junto com André?",correta:"São Pedro",opcoes:["São Pedro","São Judas Tadeu","São Mateus"],explica:"Pedro e André foram chamados por Jesus para serem pescadores de homens."}
+  ]},
+  {titulo:"Fase 4",nivel:"Memória e missão",perguntas:[
+    {pista:"Azul combina comigo neste acampamento.",pergunta:"Qual cor identifica São Pedro?",correta:"Azul",opcoes:["Azul","Roxo","Verde"],explica:"São Pedro está ligado à fita azul no acampamento."},
+    {pista:"Roxo lembra minha intercessão.",pergunta:"Qual cor identifica São Judas Tadeu?",correta:"Roxo",opcoes:["Roxo","Amarelo","Rosa"],explica:"São Judas Tadeu está ligado à fita roxa."},
+    {pista:"Verde é minha fita.",pergunta:"Qual cor identifica São Filipe?",correta:"Verde",opcoes:["Verde","Laranja","Vermelha"],explica:"São Filipe usa a fita verde."},
+    {pista:"Amarelo é minha marca no acampamento.",pergunta:"Qual santo tem a fita amarela?",correta:"Santo André",opcoes:["Santo André","São Tiago Maior","São Mateus"],explica:"Santo André tem a fita amarela."},
+    {pista:"Sou associado à profissão de fé.",pergunta:"Qual frase combina com São Tomé?",correta:"Meu Senhor e meu Deus",opcoes:["Meu Senhor e meu Deus","Segue-me","Apascenta minhas ovelhas"],explica:"Essa frase de São Tomé é uma grande profissão de fé."},
+    {pista:"Sou associado ao chamado de Jesus.",pergunta:"Qual frase combina com São Mateus?",correta:"Segue-me",opcoes:["Segue-me","Mostra-nos o Pai","Lança as redes"],explica:"Mateus deixou tudo quando Jesus o chamou: Segue-me."},
+    {pista:"Sou associado ao amor fiel.",pergunta:"Qual título combina com São João?",correta:"Discípulo Amado",opcoes:["Discípulo Amado","Cobrador convertido","Irmão de Pedro"],explica:"São João é conhecido como o Discípulo Amado."},
+    {pista:"Sou associado ao irmão de Pedro.",pergunta:"Quem é esse santo?",correta:"Santo André",opcoes:["Santo André","São Filipe","São Judas Tadeu"],explica:"Santo André era irmão de Simão Pedro."},
+    {pista:"Sou associado ao pedido de conhecer o Pai.",pergunta:"Quem fez esse pedido?",correta:"São Filipe",opcoes:["São Filipe","São Tiago Maior","São Tomé"],explica:"Filipe pediu para Jesus mostrar o Pai."},
+    {pista:"Sou associado à coragem apostólica.",pergunta:"Qual destes é São Tiago Maior?",correta:"O apóstolo da fita rosa",opcoes:["O apóstolo da fita rosa","O evangelista da fita vermelha","O intercessor da fita roxa"],explica:"No acampamento, São Tiago Maior é representado pela fita rosa."}
+  ]},
+  {titulo:"Fase 5",nivel:"Desafio dos intercessores",perguntas:[
+    {pista:"Cor + símbolo.",pergunta:"Qual dupla está correta?",correta:"São Pedro - azul - chaves",opcoes:["São Pedro - azul - chaves","São Mateus - roxo - causas difíceis","Santo André - verde - Evangelho"],explica:"São Pedro está ligado à cor azul e às chaves."},
+    {pista:"Cor + missão.",pergunta:"Qual dupla está correta?",correta:"São Judas Tadeu - roxo - causas difíceis",opcoes:["São Judas Tadeu - roxo - causas difíceis","São Filipe - rosa - Discípulo Amado","São Tomé - azul - pescador"],explica:"São Judas Tadeu é lembrado como intercessor nas causas difíceis."},
+    {pista:"Evangelista e cor.",pergunta:"Qual dupla está correta?",correta:"São João Evangelista - vermelho",opcoes:["São João Evangelista - vermelho","São Tomé - amarelo","São Tiago Maior - azul claro"],explica:"São João Evangelista usa a cor vermelha no acampamento."},
+    {pista:"Chamado e mudança de vida.",pergunta:"Qual santo era cobrador de impostos?",correta:"São Mateus",opcoes:["São Mateus","São Pedro","São Filipe"],explica:"São Mateus deixou a antiga vida para seguir Jesus."},
+    {pista:"Pergunta que virou revelação.",pergunta:"Quem ouviu Jesus dizer: Eu sou o caminho, a verdade e a vida?",correta:"São Tomé",opcoes:["São Tomé","São João Evangelista","São Judas Tadeu"],explica:"A pergunta de Tomé ajudou todos a escutar essa resposta de Jesus."},
+    {pista:"Pedido profundo.",pergunta:"Quem pediu: Mostra-nos o Pai?",correta:"São Filipe",opcoes:["São Filipe","São Pedro","Santo André"],explica:"São Filipe nos lembra o desejo de conhecer Deus mais de perto."},
+    {pista:"Perto da cruz.",pergunta:"Qual santo recebeu Maria como mãe?",correta:"São João Evangelista",opcoes:["São João Evangelista","São Tiago Maior","São Tomé"],explica:"São João permaneceu com Maria junto de Jesus."},
+    {pista:"Primeiros chamados.",pergunta:"Qual dupla de irmãos foi chamada por Jesus?",correta:"Pedro e André",opcoes:["Pedro e André","Mateus e Tomé","Filipe e Judas Tadeu"],explica:"Pedro e André eram irmãos e foram chamados por Jesus."},
+    {pista:"Fita rosa.",pergunta:"Qual alternativa identifica São Tiago Maior?",correta:"Apóstolo corajoso da fita rosa",opcoes:["Apóstolo corajoso da fita rosa","Evangelista da fita azul claro","Intercessor da fita roxa"],explica:"São Tiago Maior aparece com a fita rosa no acampamento."},
+    {pista:"Missão final.",pergunta:"Qual atitude combina com todos os santos intercessores?",correta:"Apontar para Jesus",opcoes:["Apontar para Jesus","Guardar a fé só para si","Desistir quando é difícil"],explica:"Os santos não ficam no centro: eles nos ajudam a caminhar com Jesus."}
+  ]}
 ];
 const MISSOES=[
   {titulo:"Oração escondida",texto:"Reze por alguém do grupo sem contar para a pessoa hoje."},
@@ -620,10 +684,12 @@ const ORACOES=[
 ];
 let quizAtual=0;
 let quizRespondido=false;
-let kidsAtual=0;
+let kidsFase=0;
+let kidsPergunta=0;
 let kidsPontos=0;
 let kidsRespondido=false;
 let kidsAlternativas=[];
+let kidsResultado=false;
 
 function trocarPainel(alvo){
   document.querySelectorAll(".plataforma-tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.panel===alvo?"true":"false"));
@@ -662,22 +728,32 @@ function proximaQuiz(){
 function embaralhar(lista){
   return lista.map(item=>({item,ordem:Math.random()})).sort((a,b)=>a.ordem-b.ordem).map(({item})=>item);
 }
+function kidsFaseAtual(){
+  return KIDS_FASES[kidsFase];
+}
+function renderKidsFases(){
+  return '<div class="kids-fases">'+KIDS_FASES.map((f,i)=>'<div class="kids-fase '+(i===kidsFase?"ativa":i<kidsFase?"liberada":"")+'">'+(i<kidsFase?"Liberada":f.titulo)+'</div>').join("")+'</div>';
+}
 function renderKidsQuiz(){
   const el=document.getElementById("kids-card"); if(!el)return;
-  const q=KIDS_QUIZ[kidsAtual];
-  kidsAlternativas=embaralhar(q.opcoes.map((texto,i)=>({texto,correta:i===q.correta})));
-  el.innerHTML='<div class="kids-score">Pontos: '+kidsPontos+' · Desafio '+(kidsAtual+1)+' de '+KIDS_QUIZ.length+'</div>'+
+  if(kidsResultado){renderKidsResultado();return;}
+  const fase=kidsFaseAtual();
+  const q=fase.perguntas[kidsPergunta];
+  kidsAlternativas=embaralhar(q.opcoes.map(texto=>({texto,correta:texto===q.correta})));
+  el.innerHTML=renderKidsFases()+
+    '<div class="kids-score">'+fase.titulo+' · '+fase.nivel+'</div>'+
+    '<div class="kids-meta"><span>Acertos: '+kidsPontos+'/10</span><span>Meta: 8 acertos</span><span>Desafio '+(kidsPergunta+1)+' de '+fase.perguntas.length+'</span></div>'+
     '<div class="kids-pista">Pista: '+q.pista+'</div>'+
     '<h3 class="kids-pergunta">'+q.pergunta+'</h3>'+
     '<div class="kids-opcoes">'+kidsAlternativas.map((o,i)=>'<button class="kids-opcao" data-kids-resposta="'+i+'" data-kids-correta="'+(o.correta?"1":"0")+'">'+o.texto+'</button>').join("")+'</div>'+
     '<div class="kids-feedback" id="kids-feedback"></div>'+
-    '<div style="margin-top:14px"><button class="btn btn-ouro" id="btn-proximo-kids">Próximo santo</button></div>';
+    '<div style="margin-top:14px"><button class="btn btn-ouro" id="btn-proximo-kids">'+(kidsPergunta===fase.perguntas.length-1?"Ver resultado":"Próximo desafio")+'</button></div>';
   kidsRespondido=false;
 }
 function responderKidsQuiz(i){
   if(kidsRespondido)return;
   kidsRespondido=true;
-  const q=KIDS_QUIZ[kidsAtual];
+  const q=kidsFaseAtual().perguntas[kidsPergunta];
   const acertou=kidsAlternativas[i]&&kidsAlternativas[i].correta;
   if(acertou)kidsPontos++;
   document.querySelectorAll(".kids-opcao").forEach((b,idx)=>{
@@ -688,9 +764,42 @@ function responderKidsQuiz(i){
   if(fb)fb.textContent=(acertou?"Que alegria, você acertou! ":"Boa tentativa! ")+q.explica;
 }
 function proximoKidsQuiz(){
-  kidsAtual=(kidsAtual+1)%KIDS_QUIZ.length;
-  if(kidsAtual===0)kidsPontos=0;
+  if(!kidsRespondido)return;
+  const fase=kidsFaseAtual();
+  if(kidsPergunta<fase.perguntas.length-1){
+    kidsPergunta++;
+  }else{
+    kidsResultado=true;
+  }
   renderKidsQuiz();
+}
+function renderKidsResultado(){
+  const el=document.getElementById("kids-card"); if(!el)return;
+  const fase=kidsFaseAtual();
+  const passou=kidsPontos>=8;
+  const ultima=kidsFase===KIDS_FASES.length-1;
+  el.innerHTML=renderKidsFases()+
+    '<div class="kids-resultado">'+
+      '<div class="kids-score">'+fase.titulo+' concluída · '+kidsPontos+' de 10 acertos</div>'+
+      '<h3>'+(passou?(ultima?"Você venceu todas as fases!":"Fase liberada!"):"Quase lá!")+'</h3>'+
+      '<p>'+(passou?(ultima?"Você completou o desafio dos intercessores. Agora já conhece sinais, cores e missões dos santos.":"Você acertou pelo menos 8 respostas e pode avançar para a próxima fase."):"Para passar de fase, precisa acertar 8 de 10. Revise as pistas e tente de novo.")+'</p>'+
+      '<div class="kids-acoes">'+
+        (passou&&!ultima?'<button class="btn btn-ouro" id="btn-kids-proxima-fase">Ir para '+KIDS_FASES[kidsFase+1].titulo+'</button>':'')+
+        '<button class="btn" id="btn-kids-refazer-fase">'+(passou&&ultima?"Jogar novamente":"Refazer fase")+'</button>'+
+      '</div>'+
+    '</div>';
+}
+function reiniciarKidsFase(){
+  kidsPergunta=0;
+  kidsPontos=0;
+  kidsRespondido=false;
+  kidsResultado=false;
+  renderKidsQuiz();
+}
+function avancarKidsFase(){
+  if(kidsPontos<8||kidsFase>=KIDS_FASES.length-1)return;
+  kidsFase++;
+  reiniciarKidsFase();
 }
 function renderMissoes(){
   const grid=document.getElementById("missoes-grid"); if(!grid)return;
@@ -724,6 +833,8 @@ document.addEventListener("click",e=>{
   if(kids){responderKidsQuiz(+kids.dataset.kidsResposta);return;}
   if(e.target.closest("#btn-proxima-quiz")){proximaQuiz();return;}
   if(e.target.closest("#btn-proximo-kids")){proximoKidsQuiz();return;}
+  if(e.target.closest("#btn-kids-proxima-fase")){avancarKidsFase();return;}
+  if(e.target.closest("#btn-kids-refazer-fase")){reiniciarKidsFase();return;}
   if(e.target.closest("#btn-sortear-santo")){sortearSanto();return;}
   const sc=e.target.closest(".santo-chip");
   if(sc){
