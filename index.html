@@ -623,6 +623,7 @@ let quizRespondido=false;
 let kidsAtual=0;
 let kidsPontos=0;
 let kidsRespondido=false;
+let kidsAlternativas=[];
 
 function trocarPainel(alvo){
   document.querySelectorAll(".plataforma-tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.panel===alvo?"true":"false"));
@@ -658,13 +659,17 @@ function proximaQuiz(){
   quizAtual=(quizAtual+1)%QUIZ.length;
   renderQuiz();
 }
+function embaralhar(lista){
+  return lista.map(item=>({item,ordem:Math.random()})).sort((a,b)=>a.ordem-b.ordem).map(({item})=>item);
+}
 function renderKidsQuiz(){
   const el=document.getElementById("kids-card"); if(!el)return;
   const q=KIDS_QUIZ[kidsAtual];
+  kidsAlternativas=embaralhar(q.opcoes.map((texto,i)=>({texto,correta:i===q.correta})));
   el.innerHTML='<div class="kids-score">Pontos: '+kidsPontos+' · Desafio '+(kidsAtual+1)+' de '+KIDS_QUIZ.length+'</div>'+
     '<div class="kids-pista">Pista: '+q.pista+'</div>'+
     '<h3 class="kids-pergunta">'+q.pergunta+'</h3>'+
-    '<div class="kids-opcoes">'+q.opcoes.map((o,i)=>'<button class="kids-opcao" data-kids-resposta="'+i+'">'+o+'</button>').join("")+'</div>'+
+    '<div class="kids-opcoes">'+kidsAlternativas.map((o,i)=>'<button class="kids-opcao" data-kids-resposta="'+i+'" data-kids-correta="'+(o.correta?"1":"0")+'">'+o.texto+'</button>').join("")+'</div>'+
     '<div class="kids-feedback" id="kids-feedback"></div>'+
     '<div style="margin-top:14px"><button class="btn btn-ouro" id="btn-proximo-kids">Próximo santo</button></div>';
   kidsRespondido=false;
@@ -673,13 +678,14 @@ function responderKidsQuiz(i){
   if(kidsRespondido)return;
   kidsRespondido=true;
   const q=KIDS_QUIZ[kidsAtual];
-  if(i===q.correta)kidsPontos++;
+  const acertou=kidsAlternativas[i]&&kidsAlternativas[i].correta;
+  if(acertou)kidsPontos++;
   document.querySelectorAll(".kids-opcao").forEach((b,idx)=>{
-    if(idx===q.correta)b.classList.add("correta");
+    if(b.dataset.kidsCorreta==="1")b.classList.add("correta");
     else if(idx===i)b.classList.add("errada");
   });
   const fb=document.getElementById("kids-feedback");
-  if(fb)fb.textContent=(i===q.correta?"Que alegria, você acertou! ":"Boa tentativa! ")+q.explica;
+  if(fb)fb.textContent=(acertou?"Que alegria, você acertou! ":"Boa tentativa! ")+q.explica;
 }
 function proximoKidsQuiz(){
   kidsAtual=(kidsAtual+1)%KIDS_QUIZ.length;
