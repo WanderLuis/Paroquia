@@ -590,6 +590,11 @@
       box-shadow: none;
     }
 
+    .product-card.sold-out .product-media img {
+      filter: grayscale(0.2);
+      opacity: 0.58;
+    }
+
     .product-media span {
       position: absolute;
       left: 16px;
@@ -602,6 +607,25 @@
       border: 1px solid var(--line);
       border-radius: 999px;
       padding: 5px 10px;
+    }
+
+    .sold-out-ribbon {
+      position: absolute;
+      top: 22px;
+      right: -48px;
+      width: 190px;
+      transform: rotate(35deg);
+      background: var(--rose);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      box-shadow: 0 12px 28px rgba(58, 78, 52, 0.18);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0;
+      line-height: 1;
+      padding: 10px 0;
+      text-align: center;
+      text-transform: uppercase;
     }
 
     .product-body {
@@ -682,6 +706,14 @@
       background: var(--green);
       color: #ffffff;
       font-weight: 900;
+    }
+
+    .product-link.sold-out-link {
+      background: rgba(95, 112, 95, 0.16);
+      color: var(--muted);
+      border: 1px solid var(--line);
+      box-shadow: none;
+      cursor: not-allowed;
     }
 
     .shop-contact {
@@ -1361,7 +1393,8 @@
       image: `assets/catalogo/premium-${String(index + 1).padStart(2, "0")}.jpeg`,
       badge: "Premium",
       combo: "Camiseta + Lata prata Premium",
-      price: "R$ 89,90"
+      price: "R$ 89,90",
+      soldOut: index === 11
     }));
 
     const promoCatalog = [
@@ -1393,20 +1426,23 @@
       if (!container) return;
 
       container.innerHTML = products.map((product) => `
-        <article class="product-card">
+        <article class="product-card${product.soldOut ? " sold-out" : ""}">
           <div class="product-media">
             <img src="${product.image}" alt="${product.title}" loading="lazy">
             <span>${product.badge}</span>
+            ${product.soldOut ? '<div class="sold-out-ribbon">Esgotado</div>' : ""}
           </div>
           <div class="product-body">
             <h3>${product.title}</h3>
             <p>${product.combo}</p>
             <div class="product-meta">
               <span>${product.price}</span>
-              <span>Consultar tamanho</span>
-              <span>Pedido via WhatsApp</span>
+              <span>${product.soldOut ? "Esgotado" : "Consultar tamanho"}</span>
+              <span>${product.soldOut ? "Indisponível" : "Pedido via WhatsApp"}</span>
             </div>
-            <a class="product-link" href="${buildWhatsappLink(product)}" target="_blank" rel="noopener">Consultar via WhatsApp</a>
+            ${product.soldOut
+              ? '<span class="product-link sold-out-link" aria-disabled="true">Indisponível no momento</span>'
+              : `<a class="product-link" href="${buildWhatsappLink(product)}" target="_blank" rel="noopener">Consultar via WhatsApp</a>`}
           </div>
         </article>
       `).join("");
