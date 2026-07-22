@@ -1194,7 +1194,7 @@
               <h3>Linha Promocional</h3>
               <p>Camiseta + Lata adesivada</p>
             </div>
-            <span class="catalog-price">R$ 69,90</span>
+            <span class="catalog-price">A partir de R$ 59,90</span>
           </div>
           <div class="shop-grid" id="promo-catalog"></div>
         </div>
@@ -1441,7 +1441,7 @@
       image: `assets/catalogo/promocional-${String(index + 1).padStart(2, "0")}.jpeg`,
       badge: "Promocional",
       combo: "Camiseta + Lata adesivada",
-      price: "R$ 69,90"
+      price: ["Conhecereis a Verdade", "Eu Sou o Caminho"].includes(title) ? "R$ 59,90" : "R$ 69,90"
     }));
 
     function buildWhatsappLink(product) {
