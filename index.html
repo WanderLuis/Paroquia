@@ -1388,8 +1388,36 @@
 
     const whatsappPhone = "5517992381891";
 
-    const premiumCatalog = Array.from({ length: 25 }, (_, index) => ({
-      title: `Premium ${String(index + 1).padStart(2, "0")}`,
+    const premiumTitles = [
+      "A paz vos deixo - Joao 14,27",
+      "Vos sois a luz do mundo - Mateus 5,14",
+      "Deus amou o mundo - Joao 3,16",
+      "Confiai no Senhor - Proverbios 3,5",
+      "Vos sois a luz do mundo - Mateus 5,14",
+      "O Senhor e meu pastor - Salmo 23,1",
+      "Tudo posso naquele que me fortalece - Filipenses 4,13",
+      "Deus amou o mundo - Joao 3,16",
+      "Tudo posso naquele que me fortalece - Filipenses 4,13",
+      "A paz vos deixo - Joao 14,27",
+      "Vos sois a luz do mundo - Mateus 5,14",
+      "Buscai primeiro o Reino de Deus - Mateus 6,33",
+      "Confiai no Senhor - Proverbios 3,5",
+      "Quem permanece em mim da fruto - Joao 15,5",
+      "A paz vos deixo - Joao 14,27",
+      "Esperanca que nao decepciona - Romanos 5,5",
+      "Esperanca que nao decepciona - Romanos 5,5",
+      "Quem permanece em mim da fruto - Joao 15,5",
+      "Confiai no Senhor - Proverbios 3,5",
+      "Deus e meu refugio - Salmo 46,1",
+      "Deus amou o mundo - Joao 3,16",
+      "Buscai primeiro o Reino de Deus - Mateus 6,33",
+      "Deus e meu refugio - Salmo 46,1",
+      "Deus e meu refugio - Salmo 46,1",
+      "Quem permanece em mim da fruto - Joao 15,5"
+    ];
+
+    const premiumCatalog = premiumTitles.map((title, index) => ({
+      title,
       image: `assets/catalogo/premium-${String(index + 1).padStart(2, "0")}.jpeg`,
       badge: "Premium",
       combo: "Camiseta + Lata prata Premium",
