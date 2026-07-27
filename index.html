@@ -288,6 +288,7 @@
     .daily-card,
     .product-card,
     .shop-contact,
+    .shop-notice,
     .church-card {
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -670,6 +671,43 @@
       margin-top: 0;
     }
 
+    .shop-notice {
+      margin-bottom: 28px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      background: linear-gradient(90deg, rgba(79, 130, 184, 0.12), rgba(34, 181, 91, 0.1), rgba(201, 150, 52, 0.12));
+    }
+
+    .shop-notice strong {
+      display: block;
+      color: var(--green-2);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+    }
+
+    .shop-notice h3 {
+      margin-top: 8px;
+      font-size: clamp(1.35rem, 2vw, 2rem);
+    }
+
+    .shop-notice p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .shop-notice-badge {
+      border: 1px solid rgba(34, 181, 91, 0.34);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--green-2);
+      font-weight: 900;
+      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.76);
+    }
+
     .catalog-title {
       display: flex;
       justify-content: space-between;
@@ -825,6 +863,10 @@
       }
 
       .shop-contact {
+        grid-template-columns: 1fr;
+      }
+
+      .shop-notice {
         grid-template-columns: 1fr;
       }
 
@@ -1175,6 +1217,15 @@
             Não há compra direta pelo site. Escolha o modelo, consulte o tamanho
             disponível e finalize o pedido pelo WhatsApp.
           </p>
+        </div>
+
+        <div class="shop-notice">
+          <div>
+            <strong>Novidades chegando</strong>
+            <h3>Em breve, terços e outros produtos católicos na nossa lojinha.</h3>
+            <p>Além das camisetas, a Missão na Lata está preparando novos itens para oração, presente e evangelização.</p>
+          </div>
+          <span class="shop-notice-badge">Em breve</span>
         </div>
 
         <div class="catalog-block">
